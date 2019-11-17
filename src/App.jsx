@@ -32,6 +32,7 @@ export default class App extends Component {
     comment: "",
     trust: 15,
     distrust: 2,
+    opinion: "",
     form: true
   }
 
@@ -80,6 +81,52 @@ export default class App extends Component {
     })
   }
 
+  toggleTrust = () => {
+    switch (this.state.opinion) {
+      case "trust":
+        this.setState({
+          trust: this.state.trust - 1,
+          opinion: ""
+        })
+        break;
+      case "distrust":
+        this.setState({
+          trust: this.state.trust + 1,
+          distrust: this.state.distrust - 1,
+          opinion: "trust"
+        })
+      default:
+        this.setState({
+          trust: this.state.trust + 1,
+          opinion: "trust"
+        })
+        break;
+    }
+  }
+
+  toggleDistrust = () => {
+    switch (this.state.opinion) {
+      case "distrust":
+        this.setState({
+          distrust: this.state.distrust - 1,
+          opinion: ""
+        })
+        break;
+      case "trust":
+        this.setState({
+          distrust: this.state.distrust + 1,
+          trust: this.state.trust - 1,
+          opinion: "distrust"
+        })
+      default:
+        this.setState({
+          distrust: this.state.distrust + 1,
+          opinion: "distrust"
+        })
+        break;
+    }
+  }
+
   renderMap = () => {
     if (this.state.form == true) {
       return (
@@ -94,7 +141,7 @@ export default class App extends Component {
           longitude={this.state.location.longitude}
           zoom={15}
           mapboxApiAccessToken={MAPBOX_TOKEN}
-          >
+        >
 
           <Marker key={1} latitude={this.state.location.latitude} longitude={this.state.location.longitude} offsetLeft={-100} offsetTop={-40}>
             <button className="marker">
@@ -119,7 +166,7 @@ export default class App extends Component {
                 <Form.Group as={Row} controlId="incident.location">
                   <Col sm="4">
                     <Form.Label>Latitude: </Form.Label>
-                    <Form.Control plaintext readOnly value={parseFloat(Math.round(this.state.location.latitude * 10000) / 10000).toFixed(4)}/>
+                    <Form.Control plaintext readOnly value={parseFloat(Math.round(this.state.location.latitude * 10000) / 10000).toFixed(4)} />
                   </Col>
                   <Col sm="4">
                     <Form.Label>Longitude: </Form.Label>
@@ -179,6 +226,10 @@ export default class App extends Component {
             </Col>
             <Col sm="3">
               <Form.Label>Distrust: {this.state.distrust}</Form.Label>
+            </Col>
+            <Col sm="6">
+              <Button type="button" variant={this.state.opinion == "trust"? "success" : "outline-success"} onClick={this.toggleTrust}>Trust</Button>
+              <Button type="button" variant={this.state.opinion == "distrust"? "danger" : "outline-danger"} onClick={this.toggleDistrust}>Distrust</Button>
             </Col>
           </Row>
           <Row>
