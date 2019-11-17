@@ -104,7 +104,7 @@ export default class Map extends Component {
           </Marker>
         ))}
 
-        <Marker key={5} latitude={this.state.marker.latitude} longitude={this.state.marker.longitude} draggable={true} offsetLeft={-75} offsetTop={-30}>
+        <Marker key={5} latitude={this.state.marker.latitude} longitude={this.state.marker.longitude} draggable={true} offsetLeft={-100} offsetTop={-40}>
           <button className="marker">
             <div> 
               Where should I go? (Click)
